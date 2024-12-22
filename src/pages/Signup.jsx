@@ -1,12 +1,20 @@
+import { sendOtp } from "@/apiServices/apiHandlers/authAPI";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
+import { setSignupData } from "@/redux/authSlice";
 import { Eye, EyeOff, Mail, UserRound } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,7 +36,7 @@ const Signup = () => {
     }));
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,12 +58,24 @@ const Signup = () => {
       return;
     }
 
-    console.log(formData);
+    // console.log(formData);
 
+    const signupData = {
+      ...formData,
+    };
 
-
-
+    //set signup data to state
+    dispatch(setSignupData(signupData));
+    await dispatch(sendOtp(formData.email, navigate));
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
       <div className="w-1/3 bg-[#f1f5f9] rounded-xl p-6 shadow-sm">
@@ -68,6 +88,7 @@ const Signup = () => {
             <div className="relative flex items-center">
               <UserRound className="absolute left-0 h-5 w-5 text-gray-500" />
               <Input
+                disabled={loading}
                 required
                 type="text"
                 name="firstName"
@@ -84,6 +105,7 @@ const Signup = () => {
             <div className="relative flex items-center">
               <UserRound className="absolute left-0 h-5 w-5 text-gray-500" />
               <Input
+                disabled={loading}
                 required
                 type="text"
                 name="lastName"
@@ -100,6 +122,7 @@ const Signup = () => {
             <div className="relative flex items-center">
               <Mail className="absolute left-0 h-5 w-5 text-gray-500" />
               <Input
+                disabled={loading}
                 required
                 type="text"
                 name="email"
@@ -115,6 +138,7 @@ const Signup = () => {
           <div>
             <div className="relative flex items-center">
               <Input
+                disabled={loading}
                 required
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -136,6 +160,7 @@ const Signup = () => {
           <div>
             <div className="relative flex items-center">
               <Input
+                disabled={loading}
                 required
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
@@ -154,12 +179,23 @@ const Signup = () => {
             <Separator className="border-t-2 border-[#1e3a8a] w-full" />
           </div>
 
-          <Button
-            type="submit"
-            className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
-          >
-            Submit
-          </Button>
+          {loading ? (
+            <Button
+              type="submit"
+              className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
+            >
+              <ClipLoader className="invert brightness-100" size={18} />Loading...
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
+            >
+              Submit
+            </Button>
+          )
+          }
+
 
           <p className="text-center text-lg text-gray-800 ">
             Already have an account?{" "}
