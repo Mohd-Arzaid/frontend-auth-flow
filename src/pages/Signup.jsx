@@ -66,14 +66,16 @@ const Signup = () => {
 
     //set signup data to state
     dispatch(setSignupData(signupData));
-    await dispatch(sendOtp(formData.email, navigate));
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+    dispatch(sendOtp(formData.email, navigate)).finally(() => {
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
     });
+
   };
 
   return (
@@ -179,23 +181,19 @@ const Signup = () => {
             <Separator className="border-t-2 border-[#1e3a8a] w-full" />
           </div>
 
-          {loading ? (
-            <Button
-              type="submit"
-              className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
-            >
-              <ClipLoader className="invert brightness-100" size={18} />Loading...
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
-            >
-              Submit
-            </Button>
-          )
-          }
-
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full mt-2 rounded-lg bg-[#1e3a8a] hover:bg-[#1e3a8a]/90 border-2 border-[#1e3a8a] text-white h-12 text-lg font-semibold "
+          >
+            {loading ? (
+              <>
+                <ClipLoader className="invert brightness-100" size={18} />Loading...
+              </>
+            ) : (
+              "Submit"
+            )}
+          </Button>
 
           <p className="text-center text-lg text-gray-800 ">
             Already have an account?{" "}
