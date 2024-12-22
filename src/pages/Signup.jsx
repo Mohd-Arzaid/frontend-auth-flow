@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 import { Eye, EyeOff, Mail, UserRound } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -16,6 +17,7 @@ const Signup = () => {
 
   const { firstName, lastName, email, password, confirmPassword } = formData;
 
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -28,6 +30,31 @@ const Signup = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast({
+        variant: "destructive",
+        title: "Email Address is Invalid",
+        description: "Please enter a valid Email Address.",
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast({
+        variant: "destructive",
+        title: "Passwords Do Not Match",
+        description: "Please make sure both Passwords are the Same.",
+      });
+      return;
+    }
+
+    console.log(formData);
+
+
+
+
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
@@ -57,6 +84,7 @@ const Signup = () => {
             <div className="relative flex items-center">
               <UserRound className="absolute left-0 h-5 w-5 text-gray-500" />
               <Input
+                required
                 type="text"
                 name="lastName"
                 value={lastName}
@@ -87,6 +115,7 @@ const Signup = () => {
           <div>
             <div className="relative flex items-center">
               <Input
+                required
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={password}
@@ -98,7 +127,7 @@ const Signup = () => {
                 className="absolute right-0 h-6 w-6 text-gray-500 cursor-pointer"
                 onClick={() => setShowPassword((prev) => !prev)}
               >
-                {showPassword ? <Eye/> : <EyeOff />}
+                {showPassword ? <Eye /> : <EyeOff />}
               </div>
             </div>
             <Separator className="border-t-2 border-[#1e3a8a] w-full" />
@@ -119,7 +148,7 @@ const Signup = () => {
                 className="absolute right-0 h-6 w-6 text-gray-500 cursor-pointer"
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
               >
-                {showConfirmPassword ? <Eye/> : <EyeOff />}
+                {showConfirmPassword ? <Eye /> : <EyeOff />}
               </div>
             </div>
             <Separator className="border-t-2 border-[#1e3a8a] w-full" />
