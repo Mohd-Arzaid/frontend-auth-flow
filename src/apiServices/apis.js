@@ -4,4 +4,5 @@ const BASE_URL = import.meta.env.VITE_APP_BASE_URL;
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/user/sendotp",
   SIGNUP_API: BASE_URL + "/user/signup",
+  LOGIN_API: BASE_URL + "/user/login",
 };

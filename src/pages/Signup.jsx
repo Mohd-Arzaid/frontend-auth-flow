@@ -80,7 +80,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="w-1/3 bg-[#f1f5f9] rounded-xl p-6 shadow-sm">
+      <div className="w-[30%] bg-[#f1f5f9] rounded-xl p-6 shadow-sm">
         <h1 className="text-center text-3xl font-bold text-[#1e3a8a]">
           Create Account
         </h1>
@@ -96,7 +96,7 @@ const Signup = () => {
                 name="firstName"
                 value={firstName}
                 onChange={handleOnChange}
-                placeholder="Your First Name"
+                placeholder="Enter Your First Name"
                 className="bg-transparent border-none focus:outline-none  placeholder:text-gray-500 text-lg placeholder:text-lg pl-7"
               />
             </div>
@@ -113,7 +113,7 @@ const Signup = () => {
                 name="lastName"
                 value={lastName}
                 onChange={handleOnChange}
-                placeholder="Your Last Name"
+                placeholder="Enter Your Last Name"
                 className="bg-transparent border-none focus:outline-none  placeholder:text-gray-500 text-lg placeholder:text-lg pl-7"
               />
             </div>
@@ -130,7 +130,7 @@ const Signup = () => {
                 name="email"
                 value={email}
                 onChange={handleOnChange}
-                placeholder="Your Email Address"
+                placeholder="Enter Your Email Address"
                 className="bg-transparent border-none focus:outline-none  placeholder:text-gray-500 text-lg placeholder:text-lg pl-7"
               />
             </div>
@@ -146,7 +146,7 @@ const Signup = () => {
                 name="password"
                 value={password}
                 onChange={handleOnChange}
-                placeholder="Create Password"
+                placeholder="Create Your Password"
                 className="bg-transparent border-none focus:outline-none  placeholder:text-gray-500 text-lg placeholder:text-lg pl-0"
               />
               <div
@@ -168,7 +168,7 @@ const Signup = () => {
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={handleOnChange}
-                placeholder="Confirm Password"
+                placeholder="Confirm Your Password"
                 className="bg-transparent border-none focus:outline-none  placeholder:text-gray-500 text-lg placeholder:text-lg pl-0"
               />
               <div

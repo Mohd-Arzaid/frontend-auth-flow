@@ -1,9 +1,9 @@
-import { setLoading } from "@/redux/authSlice";
+import { setLoading, setToken } from "@/redux/authSlice";
 import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
 import { toast } from "@/components/ui/use-toast";
 
-const { SENDOTP_API, SIGNUP_API } = endpoints;
+const { SENDOTP_API, SIGNUP_API, LOGIN_API } = endpoints;
 
 export const sendOtp = (email, navigate) => {
   return async (dispatch) => {
@@ -83,6 +83,43 @@ export const signUp = (
       toast({
         variant: "destructive",
         title: "Failed to Create Account",
+        description: errorMessage,
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const login = (email, password, navigate) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("POST", LOGIN_API, {
+        email,
+        password,
+      });
+
+      // console.log("LOGIN API RESPONSE............", response);
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast({
+        variant: "destructive",
+        title: "Login Successfully",
+        description: "Welcome back! You have Logged in Successfully.",
+      });
+      dispatch(setToken(response.data.token));
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      // navigate("/dashboard/my-profile");
+    } catch (error) {
+      // console.log("LOGIN API ERROR............", error);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Failed to Login",
         description: errorMessage,
       });
     } finally {
