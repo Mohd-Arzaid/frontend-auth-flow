@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import OpenRoute from "./authRoutes/OpenRoute";
 import PrivateRoute from "./authRoutes/PrivateRoute";
+import Dashboard from "./components/manual/Dashboard";
 
 function App() {
   return (
@@ -66,6 +67,17 @@ function App() {
           </PrivateRoute>
         }
       />
+      
+
+      <Route
+        path="/dashboard/my-profile"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+
     </Routes>
   );
 }
