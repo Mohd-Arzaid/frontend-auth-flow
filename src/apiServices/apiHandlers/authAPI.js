@@ -3,7 +3,7 @@ import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
 import { toast } from "@/components/ui/use-toast";
 
-const { SENDOTP_API, SIGNUP_API, LOGIN_API } = endpoints;
+const { SENDOTP_API, SIGNUP_API, LOGIN_API, RESETPASSTOKEN_API } = endpoints;
 
 export const sendOtp = (email, navigate) => {
   return async (dispatch) => {
@@ -120,6 +120,41 @@ export const login = (email, password, navigate) => {
       toast({
         variant: "destructive",
         title: "Failed to Login",
+        description: errorMessage,
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const getPasswordResetToken = (email, setEmailSent) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("POST", RESETPASSTOKEN_API, {
+        email,
+      });
+
+      // console.log("RESET PASSWORD TOKEN RESPONSE....", response);
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast({
+        variant: "destructive",
+        title: "Reset Email Sent",
+        description: "Please check your email for the reset link.",
+      });
+      
+      setEmailSent(true);
+    } catch (error) {
+      // console.log("RESET PASSWORD TOKEN Error", error);
+      const errorMessage =
+        error.response?.data?.message || "Something went wrong";
+      toast({
+        variant: "destructive",
+        title: "Error Sending Reset Email",
         description: errorMessage,
       });
     } finally {
