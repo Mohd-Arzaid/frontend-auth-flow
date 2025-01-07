@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
       <Route path="verify-email" element={<VerifyEmail />} />
 
       <Route path="forgot-password" element={<ForgotPassword />} />
+
+      <Route path="update-password/:token" element={<UpdatePassword />} />
 
     </Routes>
   );

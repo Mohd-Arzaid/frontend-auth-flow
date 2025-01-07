@@ -3,7 +3,13 @@ import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
 import { toast } from "@/components/ui/use-toast";
 
-const { SENDOTP_API, SIGNUP_API, LOGIN_API, RESETPASSTOKEN_API } = endpoints;
+const {
+  SENDOTP_API,
+  SIGNUP_API,
+  LOGIN_API,
+  RESETPASSTOKEN_API,
+  RESETPASSWORD_API,
+} = endpoints;
 
 export const sendOtp = (email, navigate) => {
   return async (dispatch) => {
@@ -146,7 +152,7 @@ export const getPasswordResetToken = (email, setEmailSent) => {
         title: "Reset Email Sent",
         description: "Please check your email for the reset link.",
       });
-      
+
       setEmailSent(true);
     } catch (error) {
       // console.log("RESET PASSWORD TOKEN Error", error);
@@ -156,6 +162,44 @@ export const getPasswordResetToken = (email, setEmailSent) => {
         variant: "destructive",
         title: "Error Sending Reset Email",
         description: errorMessage,
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};
+
+export const resetPassword = (
+  password,
+  confirmPassword,
+  resetPasswordToken
+) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("POST", RESETPASSWORD_API, {
+        password,
+        confirmPassword,
+        resetPasswordToken,
+      });
+      //console.log("RESET PASSWORD RESPONSE ... ", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast({
+        variant: "destructive",
+        title: "Password Reset Successful",
+        description: "Your password has been reset successfully.",
+      });
+    } catch (error) {
+      console.log("RESET PASSWORD UPDATE", error);
+      toast({
+        variant: "destructive",
+        title: "Error Resetting Password",
+        description:
+          error?.response?.data?.message || "An unexpected error occurred",
       });
     } finally {
       dispatch(setLoading(false));
