@@ -9,33 +9,20 @@ import {
   UserRound,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProfileDashboard = () => {
-  const user = {
-    firstName: "Mohd",
-    lastName: "Arzaid",
-    email: "arzaid010103@gmail.com",
-    image: "https://api.dicebear.com/5.x/initials/svg?seed=Abhay Raaj",
-    additionalDetails: {
-      about:
-        "Passionate developer with a keen interest in building beautiful user interfaces and robust backend systems.",
-      gender: "Male",
-      dateOfBirth: "15 Aug 1999",
+  const { user } = useSelector((state) => state.profile);
 
-      phoneNumber: "+91 9876543210",
-    },
-  };
   return (
     <div className="bg-black min-h-screen py-5">
       <div className="max-w-6xl mx-auto text-white">
-        {/* <h1 className="text-2xl font-medium text-white">My Profile</h1> */}
-
         <div className="flex items-center mt-6 justify-between p-6 rounded-md border-2 border-white/10">
           <div className="flex items-center gap-6">
             <div className="relative group">
               <img
-                src={user.image}
-                alt={`profile-${user.firstName}`}
+                src={user?.image}
+                alt={`profile-${user?.firstName}`}
                 className="w-24 h-24 rounded-full border-2 border-emerald-400/50 transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute -bottom-1 -right-1 bg-emerald-400 p-1.5 rounded-full transition-transform duration-300 group-hover:scale-110">
@@ -45,11 +32,11 @@ const ProfileDashboard = () => {
 
             <div className="text-center md:text-left">
               <h1 className="text-2xl font-bold text-emerald-300">
-                {user.firstName + " " + user.lastName}
+                {user?.firstName + " " + user?.lastName}
               </h1>
               <div className="flex items-center gap-2 text-emerald-100/70">
                 <Mail className="w-4 h-4" />
-                <span>{user.email}</span>
+                <span>{user?.email}</span>
               </div>
             </div>
           </div>
@@ -76,7 +63,7 @@ const ProfileDashboard = () => {
             </Link>
           </div>
           <p className="text-emerald-100/70 leading-relaxed">
-            Write Something About Yourself
+            {user?.additionalDetails?.about ?? "Write Something About Yourself"}
           </p>
         </div>
 
@@ -101,21 +88,23 @@ const ProfileDashboard = () => {
                 <User className="w-5 h-5 text-emerald-300" />
                 <span className="text-lg text-emerald-100/70">First Name</span>
               </div>
-              <span className="text-lg text-emerald-300">{user.firstName}</span>
+              <span className="text-lg text-emerald-300">
+                {user?.firstName}
+              </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5 text-emerald-300" />
                 <span className="text-lg text-emerald-100/70">Last Name</span>
               </div>
-              <span className="text-lg text-emerald-300">{user.lastName}</span>
+              <span className="text-lg text-emerald-300">{user?.lastName}</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
               <div className="flex items-center gap-2">
                 <AtSign className="w-5 h-5 text-emerald-300" />
                 <span className="text-lg text-emerald-100/70">Email</span>
               </div>
-              <span className="text-lgtext-emerald-300">{user.email}</span>
+              <span className="text-lg text-emerald-300">{user?.email}</span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
               <div className="flex items-center gap-2">
@@ -123,33 +112,33 @@ const ProfileDashboard = () => {
                 <span className="text-lg text-emerald-100/70">Gender</span>
               </div>
               <span className="text-lg text-emerald-300">
-                {user.additionalDetails.gender}
+                {user?.additionalDetails?.gender ?? "Add Gender"}
               </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-emerald-300" />
-                <span className="text-lg text-emerald-100/70">Phone Number</span>
+                <span className="text-lg text-emerald-100/70">
+                  Phone Number
+                </span>
               </div>
               <span className="text-lg text-emerald-300">
-                {user.additionalDetails.phoneNumber}
+                {user?.additionalDetails?.phoneNumber ?? "Add Contact Number"}
               </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-emerald-300" />
-                <span className="text-lg text-emerald-100/70">Date of Birth</span>
+                <span className="text-lg text-emerald-100/70">
+                  Date of Birth
+                </span>
               </div>
               <span className="text-lg text-emerald-300">
-                {user.additionalDetails.dateOfBirth}
+                {user?.additionalDetails?.dateOfBirth ?? "Add Date of Birth"}
               </span>
             </div>
           </div>
-
-
         </div>
-
-
       </div>
     </div>
   );

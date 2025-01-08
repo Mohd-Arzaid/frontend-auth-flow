@@ -2,6 +2,7 @@ import { setLoading, setToken } from "@/redux/authSlice";
 import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
 import { toast } from "@/components/ui/use-toast";
+import { setUser } from "@/redux/profileSlice";
 
 const {
   SENDOTP_API,
@@ -117,8 +118,15 @@ export const login = (email, password, navigate) => {
         description: "Welcome back! You have Logged in Successfully.",
       });
       dispatch(setToken(response.data.token));
+      const userImage = response.data?.user?.image
+      ? response.data.user.image
+      : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
+    dispatch(setUser({ ...response.data.user, image: userImage }));
+
+
       localStorage.setItem("token", JSON.stringify(response.data.token));
-      // navigate("/dashboard/my-profile");
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      navigate("/");
     } catch (error) {
       // console.log("LOGIN API ERROR............", error);
       const errorMessage =
