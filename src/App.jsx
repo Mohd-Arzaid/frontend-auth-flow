@@ -7,7 +7,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import OpenRoute from "./authRoutes/OpenRoute";
 import PrivateRoute from "./authRoutes/PrivateRoute";
-import Dashboard from "./components/manual/Dashboard";
+import ProfileDashboard from "./components/manual/profile/ProfileDashboard";
+import { ProfileLayout } from "./components/manual/profile/ProfileLayout";
+import ProfileSettings from "./components/manual/profile/ProfileSettings";
 
 function App() {
   return (
@@ -67,17 +69,17 @@ function App() {
           </PrivateRoute>
         }
       />
-      
 
       <Route
-        path="/dashboard/my-profile"
         element={
           <PrivateRoute>
-            <Dashboard />
+            <ProfileLayout />
           </PrivateRoute>
         }
-      />
-
+      >
+        <Route path="dashboard/my-profile" element={<ProfileDashboard />} />
+        <Route path="dashboard/Settings" element={<ProfileSettings />} />
+      </Route>
     </Routes>
   );
 }
