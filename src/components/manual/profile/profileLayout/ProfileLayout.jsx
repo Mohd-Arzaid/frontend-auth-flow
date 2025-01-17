@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Menu } from "lucide-react";
 
 import { useState } from "react";
-import { ProfileSidebar } from "./ProfileSidebar";
+import { ProfileSidebar } from "../profileSidebar/ProfileSidebar";
 
 
 export const ProfileLayout = () => {

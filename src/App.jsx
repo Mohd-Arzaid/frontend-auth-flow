@@ -7,9 +7,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import OpenRoute from "./authRoutes/OpenRoute";
 import PrivateRoute from "./authRoutes/PrivateRoute";
-import ProfileDashboard from "./components/manual/profile/ProfileDashboard";
-import { ProfileLayout } from "./components/manual/profile/ProfileLayout";
-import ProfileSettings from "./components/manual/profile/ProfileSettings";
+import ProfileDashboard from "./components/manual/profile/profileOutletComponents/ProfileDashboard";
+import { ProfileLayout } from "./components/manual/profile/profileLayout/ProfileLayout";
+import ProfileSettings from "./components/manual/profile/profileOutletComponents/ProfileSettings";
 
 function App() {
   return (
