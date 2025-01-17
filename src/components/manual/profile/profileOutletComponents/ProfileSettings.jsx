@@ -7,7 +7,6 @@ const ProfileSettings = () => {
   return (
     <div className="bg-black min-h-screen py-5">
       <div className="max-w-6xl mx-auto text-white">
-
         {/* Change Profile Picture */}
         <ChangeProfilePicture />
 
