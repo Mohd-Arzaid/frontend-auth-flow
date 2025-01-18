@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const EditProfile = () => {
-    const { user } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.profile);
   const [firstName, setFirstName] = useState(user?.firstName || "");
   const [lastName, setLastName] = useState(user?.lastName || "");
   const [gender, setGender] = useState(user?.additionalDetails?.gender || "");
@@ -100,7 +100,6 @@ const EditProfile = () => {
           Update
         </button>
         <button
-          type="button"
           className="px-4 py-2 rounded-lg bg-red-600/20 text-red-300 hover:bg-red-600/30 transition-colors border border-red-600/50"
           onClick={() => window.history.back()}
         >

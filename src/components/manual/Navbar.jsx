@@ -25,7 +25,7 @@ const Navbar = () => {
           </Link>
 
           <Link
-            to="/"
+            to="/dashboard/my-profile"
             className="text-emerald-300 hover:text-emerald-400 text-lg font-medium  transition-colors"
           >
             Dashboard
