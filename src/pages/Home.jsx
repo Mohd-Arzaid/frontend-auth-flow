@@ -1,6 +1,6 @@
 import Navbar from "@/components/manual/Navbar";
 import { Heart, Shield, Sparkles } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {

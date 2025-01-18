@@ -119,10 +119,9 @@ export const login = (email, password, navigate) => {
       });
       dispatch(setToken(response.data.token));
       const userImage = response.data?.user?.image
-      ? response.data.user.image
-      : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
-    dispatch(setUser({ ...response.data.user, image: userImage }));
-
+        ? response.data.user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
+      dispatch(setUser({ ...response.data.user, image: userImage }));
 
       localStorage.setItem("token", JSON.stringify(response.data.token));
       localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -212,5 +211,23 @@ export const resetPassword = (
     } finally {
       dispatch(setLoading(false));
     }
+  };
+};
+
+
+export const logout = (navigate, isProfileDeleted = false) => {
+  return (dispatch) => {
+    dispatch(setToken(null));
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    if (!isProfileDeleted) {
+      toast({
+        variant: "destructive",
+        title: "Logged Out",
+        description: "You have been logged out successfully.",
+      });
+    }
+    navigate("/");
   };
 };

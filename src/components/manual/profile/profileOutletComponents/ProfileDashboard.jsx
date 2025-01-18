@@ -123,7 +123,7 @@ const ProfileDashboard = () => {
                 </span>
               </div>
               <span className="text-lg text-emerald-300">
-                {user?.additionalDetails?.phoneNumber ?? "Add Contact Number"}
+                {user?.additionalDetails?.contactNumber ?? "Add Contact Number"}
               </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-600/10">
